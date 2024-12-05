@@ -8,8 +8,10 @@
 
 ### Các thành phần
 1. `GeneratorAction.kt`: Tạo các actions, ở đây mẫu là tạo 1 bloc template.
-2. `plugin.xml`: Liên quan đến việc publish plugin, có nhiều thuộc tính nên phải tự vọc.
-Quan trong là:
+   Có thể tùy chọn `showInputDialog`, `showInputDialogWithCheckBox` hoặc rất nhiều kiểu Dialog khác nhau.
+   
+3. `plugin.xml`: Liên quan đến việc publish plugin, có nhiều thuộc tính nên phải tự vọc.
+Quan trọng là:
  `add-to-group group-id=""` Cái này quyết định xem action sẽ được hiển thị ở đâu.
  
 ### Build Plugin
