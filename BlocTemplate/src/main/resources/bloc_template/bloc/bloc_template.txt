@@ -1,0 +1,20 @@
+import 'package:xuni/base/base_bloc.dart';
+import 'package:injectable/injectable.dart';
+
+import '{{BlocNameLowerCase}}_state.dart';
+
+@injectable
+class {{BlocName}}Bloc extends BaseBloc<{{BlocName}}State> {
+  {{BlocName}}Bloc(
+      ) : super(const {{BlocName}}State());
+
+  // AppBloc get appBloc => getIt<AppBloc>();
+
+  // final DataRepository dataRepository;
+  // final SharedPrefsHelper prefsHelper;
+
+  Future<void> update() async {
+    emit(state.copyWith(timestamp: DateTime.now().millisecondsSinceEpoch));
+  }
+
+}

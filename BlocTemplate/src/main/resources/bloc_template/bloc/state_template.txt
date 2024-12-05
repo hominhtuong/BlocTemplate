@@ -1,0 +1,11 @@
+import 'package:xuni/base/base_state.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part '{{BlocNameLowerCase}}_state.freezed.dart';
+
+@freezed
+class {{BlocName}}State extends BaseState with _${{BlocName}}State {
+  const factory {{BlocName}}State({
+    @Default(0) int timestamp,
+  }) = _{{BlocName}}State;
+}
