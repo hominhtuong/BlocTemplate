@@ -1,5 +1,13 @@
 # Bloc Template
 
+```js
+<script src="https://plugins.jetbrains.com/assets/scripts/mp-widget.js"></script>
+<script>
+  // Please, replace #yourelement with a real element id on your webpage
+  MarketplaceWidget.setupMarketplaceWidget('install', 26011, "#yourelement");
+</script>
+```
+
 ### Setup
 1. Cài đặt IntelliJ
 2. Tải project này về, mở bằng IntelliJ

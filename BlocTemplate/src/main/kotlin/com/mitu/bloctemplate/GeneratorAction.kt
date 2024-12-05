@@ -4,27 +4,17 @@ import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.PlatformDataKeys
 import com.intellij.openapi.application.WriteAction
+import com.intellij.openapi.ui.InputValidator
 import com.intellij.openapi.ui.Messages
-import com.intellij.openapi.project.Project
-import com.intellij.openapi.vfs.VirtualFile
 
-class GeneratorAction: AnAction() {
-
+class GeneratorAction : AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
-        val message = "Bloc name:"
-        val result = Messages.showInputDialog(e.project, message, "Generate Bloc", null) ?: ""
-        if (result.isEmpty()) {
-            return
-        }
-        if (validateFileName(result)) {
-            generatorFileName(result, e)
-        } else {
-            Messages.showMessageDialog(e.project, "Please enter a valid name! 🤬", "Generate Bloc", Messages.getErrorIcon())
-        }
-    }
+        val dialogResult = Messages.showInputDialogWithCheckBox(
+            "Enter bloc name", "Generate Bloc", "Use folder",
+            true, true, null, null, FileNameInputValidator()
+        )
 
-    private fun validateFileName(fileName: String): Boolean {
-        return fileName.matches(Regex("^[a-zA-Z0-9]+$"))
+        generatorFileName(dialogResult.first, dialogResult.second, e)
     }
 
     private fun capitalizeWords(input: String): String {
@@ -33,29 +23,37 @@ class GeneratorAction: AnAction() {
         }
     }
 
-    private fun generatorFileName(fileName: String, event: AnActionEvent) {
+    private fun generatorFileName(fileName: String, userFolder: Boolean, event: AnActionEvent) {
         val blocNameLowerCase = fileName.lowercase()
         val blocClassName = capitalizeWords(fileName)
         val newFileName = fileName.lowercase()
 
         val screenInputStream = javaClass.classLoader.getResourceAsStream("bloc_template/screen_template.txt")
-        val screenContentReaded = screenInputStream?.bufferedReader().use { it?.readText() }
-        val screenContent = screenContentReaded?.replace("{{BlocName}}", blocClassName)?.replace("{{BlocNameLowerCase}}", blocNameLowerCase) ?: ""
+        val screenContentReader = screenInputStream?.bufferedReader().use { it?.readText() }
+        val screenContent = screenContentReader?.replace("{{BlocName}}", blocClassName)
+            ?.replace("{{BlocNameLowerCase}}", blocNameLowerCase) ?: ""
 
         val blocInputStream = javaClass.classLoader.getResourceAsStream("bloc_template/bloc/bloc_template.txt")
-        val blocContentReaded = blocInputStream?.bufferedReader().use { it?.readText() }
-        val blocContent = blocContentReaded?.replace("{{BlocName}}", blocClassName)?.replace("{{BlocNameLowerCase}}", blocNameLowerCase) ?: ""
+        val blocContentReader = blocInputStream?.bufferedReader().use { it?.readText() }
+        val blocContent = blocContentReader?.replace("{{BlocName}}", blocClassName)
+            ?.replace("{{BlocNameLowerCase}}", blocNameLowerCase) ?: ""
 
         val stateInputStream = javaClass.classLoader.getResourceAsStream("bloc_template/bloc/state_template.txt")
-        val stateContentReaded = stateInputStream?.bufferedReader().use { it?.readText() }
-        val stateContent = stateContentReaded?.replace("{{BlocName}}", blocClassName)?.replace("{{BlocNameLowerCase}}", blocNameLowerCase) ?: ""
+        val stateContentReader = stateInputStream?.bufferedReader().use { it?.readText() }
+        val stateContent = stateContentReader?.replace("{{BlocName}}", blocClassName)
+            ?.replace("{{BlocNameLowerCase}}", blocNameLowerCase) ?: ""
 
         val project = event.project
         val directory = event.getData(PlatformDataKeys.VIRTUAL_FILE)
 
         if (directory != null) {
             WriteAction.run<Throwable> {
-                val parentDirectory = directory.createChildDirectory(project, newFileName)
+
+                var parentDirectory = directory
+                if (userFolder) {
+                    parentDirectory = directory.createChildDirectory(project, newFileName)
+                }
+
                 val blocDirection = parentDirectory.createChildDirectory(project, "bloc")
 
                 val screenFile = parentDirectory.createChildData(event, "${newFileName}_screen.dart")
@@ -66,10 +64,19 @@ class GeneratorAction: AnAction() {
 
                 val stateFile = blocDirection.createChildData(event, "${newFileName}_state.dart")
                 stateFile.getOutputStream(project).use { it.write(stateContent.toByteArray()) }
-
                 print("generate successfully!")
             }
         }
     }
 
+}
+
+class FileNameInputValidator : InputValidator {
+    override fun checkInput(inputString: String): Boolean {
+        return inputString.isNotEmpty() && inputString.matches(Regex("^[a-zA-Z0-9]+$"))
+    }
+
+    override fun canClose(inputString: String): Boolean {
+        return checkInput(inputString)
+    }
 }
