@@ -22,7 +22,7 @@ Quan trong là:
 
 - Chọn đường dẫn đến file vừa build từ IntelliJ, `{Project_Path}/build/distributions/` và chọn file .zip vừa build.
 
-![Select Plugin](https://github.com/hominhtuong/BlocTemplate/blob/master/Resources/import.png)
+![Select Plugin](https://github.com/hominhtuong/BlocTemplate/blob/main/Resources/import.png)
 
 - Restart Android Studio và thưởng thức. 
 
