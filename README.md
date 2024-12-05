@@ -1,6 +1,6 @@
 # Bloc Template
 
-[JetBrains Marketplace] (https://plugins.jetbrains.com/plugin/26011-bloctemplate)
+[JetBrains Marketplace](https://plugins.jetbrains.com/plugin/26011-bloctemplate)
 
 ### Setup
 1. Cài đặt IntelliJ
