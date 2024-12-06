@@ -26,7 +26,7 @@ class GeneratorAction : AnAction() {
     private fun generatorFileName(fileName: String, userFolder: Boolean, event: AnActionEvent) {
         val blocNameLowerCase = fileName.lowercase()
         val blocClassName = capitalizeWords(fileName)
-        val newFileName = fileName.lowercase()
+        val newFileName = fileName.camelCaseToSnakeCase()
 
         val screenInputStream = javaClass.classLoader.getResourceAsStream("bloc_template/screen_template.txt")
         val screenContentReader = screenInputStream?.bufferedReader().use { it?.readText() }
@@ -67,6 +67,30 @@ class GeneratorAction : AnAction() {
                 print("generate successfully!")
             }
         }
+    }
+
+    private fun customFileName(originalString: String): String {
+        val fileName = originalString
+            .trim()
+            .replace("\\s+".toRegex(), " ")
+            .replace(" ", "_")
+            .lowercase()
+        return fileName
+    }
+
+    fun String.convertUpperCases(): String {
+        val regex = "([A-Z])([A-Z]+)".toRegex()
+        return regex.replace(this) {
+            it.groups[1]!!.value + it.groups[2]!!.value.lowercase()
+        }
+    }
+
+    fun String.camelCaseToSnakeCase(): String {
+        val convertUpperCase = this.convertUpperCases()
+        return convertUpperCase
+            .replace("([A-Z][a-z]+)".toRegex(), "_$1")
+            .lowercase()
+            .removePrefix("_")
     }
 
 }
