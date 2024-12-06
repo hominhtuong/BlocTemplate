@@ -1,7 +1,7 @@
 import 'package:xuni/base/base_bloc.dart';
 import 'package:injectable/injectable.dart';
 
-import '{{BlocNameLowerCase}}_state.dart';
+import '{{FileNamePrefix}}_state.dart';
 
 @injectable
 class {{BlocName}}Bloc extends BaseBloc<{{BlocName}}State> {

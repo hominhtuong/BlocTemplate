@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.mitu.bloctemplate"
-version = "1.0.2"
+version = "1.0.3"
 
 repositories {
     mavenCentral()

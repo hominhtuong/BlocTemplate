@@ -24,24 +24,23 @@ class GeneratorAction : AnAction() {
     }
 
     private fun generatorFileName(fileName: String, userFolder: Boolean, event: AnActionEvent) {
-        val blocNameLowerCase = fileName.lowercase()
         val blocClassName = capitalizeWords(fileName)
         val newFileName = fileName.camelCaseToSnakeCase()
 
         val screenInputStream = javaClass.classLoader.getResourceAsStream("bloc_template/screen_template.txt")
         val screenContentReader = screenInputStream?.bufferedReader().use { it?.readText() }
         val screenContent = screenContentReader?.replace("{{BlocName}}", blocClassName)
-            ?.replace("{{BlocNameLowerCase}}", blocNameLowerCase) ?: ""
+            ?.replace("{{FileNamePrefix}}", newFileName) ?: ""
 
         val blocInputStream = javaClass.classLoader.getResourceAsStream("bloc_template/bloc/bloc_template.txt")
         val blocContentReader = blocInputStream?.bufferedReader().use { it?.readText() }
         val blocContent = blocContentReader?.replace("{{BlocName}}", blocClassName)
-            ?.replace("{{BlocNameLowerCase}}", blocNameLowerCase) ?: ""
+            ?.replace("{{FileNamePrefix}}", newFileName) ?: ""
 
         val stateInputStream = javaClass.classLoader.getResourceAsStream("bloc_template/bloc/state_template.txt")
         val stateContentReader = stateInputStream?.bufferedReader().use { it?.readText() }
         val stateContent = stateContentReader?.replace("{{BlocName}}", blocClassName)
-            ?.replace("{{BlocNameLowerCase}}", blocNameLowerCase) ?: ""
+            ?.replace("{{FileNamePrefix}}", newFileName) ?: ""
 
         val project = event.project
         val directory = event.getData(PlatformDataKeys.VIRTUAL_FILE)
