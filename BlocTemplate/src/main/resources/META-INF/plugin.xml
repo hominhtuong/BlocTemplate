@@ -6,6 +6,18 @@
     <!-- Public plugin name should be written in Title Case.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
     <name>Bloc Template</name>
+    <version>1.1.0</version>
+    <change-notes>
+        <![CDATA[
+        <h2>What's New in Version 1.1.0</h2>
+        <ul>
+            <li>Thêm mục Generator cho Domain</li>
+            <li>Tối ưu việc tạo file name, hỗ trợ cho các case đặt tên có ký tự `_`.</li>
+            <li>Ví dụ: `Mi_Tu_ultraBlocName` sẽ cho ra kết quả filename là: `mi_tu_ultra_bloc_name` và class name sẽ là: `Ví dụ: `Mi_Tu_ultraBlocName` sẽ cho ra kết quả là: `MiTuUltraBlocName``</li>
+        </ul>
+        ]]>
+    </change-notes>
+
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
     <vendor email="support@mituultra.com" url="https://www.mituultra.com">Mitu Ultra</vendor>
@@ -24,10 +36,17 @@
     <extensions defaultExtensionNs="com.intellij">
 
     </extensions>
+
     <actions>
-        <action id="com.mitu.bloctemplate.GeneratorAction" class="com.mitu.bloctemplate.GeneratorAction"
+        <action id="com.mitu.bloctemplate.GeneratorDomain" class="com.mitu.bloctemplate.GeneratorDomain"
+                text="Domain Generator" description="Bloc Generator with template">
+            <add-to-group group-id="CutCopyPasteGroup" anchor="first"/>
+        </action>
+
+        <action id="com.mitu.bloctemplate.GeneratorBloc" class="com.mitu.bloctemplate.GeneratorBloc"
                 text="Bloc Generator" description="Bloc Generator with template">
             <add-to-group group-id="CutCopyPasteGroup" anchor="first"/>
         </action>
+
     </actions>
 </idea-plugin>

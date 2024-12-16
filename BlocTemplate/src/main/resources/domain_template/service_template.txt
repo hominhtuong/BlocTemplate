@@ -1,0 +1,16 @@
+import 'package:dio/dio.dart';
+import 'package:retrofit/retrofit.dart';
+import 'package:xuni/data/data_source/networking/responses/api_response/api_response.dart';
+
+part '{{FileNamePrefix}}_service.g.dart';
+
+@RestApi()
+abstract class {{DomainName}}Service {
+  factory {{DomainName}}Service(
+    Dio dio, {
+    String? baseUrl,
+  }) = _{{DomainName}}Service;
+
+  @GET("/api/..path")
+  Future<ApiResponse<dynamic>> getAPI();
+}

@@ -1,0 +1,20 @@
+import 'package:injectable/injectable.dart';
+import 'package:xuni/data/data_source/networking/responses/api_response/api_response.dart';
+
+import '{{FileNamePrefix}}_client.dart';
+
+abstract class I{{DomainName}}Repository {
+  Future<ApiResponse<dynamic>> getAPI();
+}
+
+@LazySingleton(as: I{{DomainName}}Repository)
+class {{DomainName}}Repository implements I{{DomainName}}Repository {
+  final I{{DomainName}}Client client;
+
+  {{DomainName}}Repository({required this.client});
+
+  @override
+  Future<ApiResponse<dynamic>> getAPI() {
+    return client.getAPI();
+  }
+}

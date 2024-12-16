@@ -1,0 +1,22 @@
+import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
+import 'package:xuni/data/data_source/networking/responses/api_response/api_response.dart';
+
+import '{{FileNamePrefix}}_service.dart';
+
+abstract class I{{DomainName}}Client {
+  Future<ApiResponse<dynamic>> getAPI();
+}
+
+@LazySingleton(as: I{{DomainName}}Client)
+class {{DomainName}}Client implements I{{DomainName}}Client {
+  final Dio dio;
+  final {{DomainName}}Service service;
+
+  {{DomainName}}Client({required this.dio}) : service = {{DomainName}}Service(dio);
+
+  @override
+  Future<ApiResponse<dynamic>> getAPI() {
+    return service.getAPI();
+  }
+}

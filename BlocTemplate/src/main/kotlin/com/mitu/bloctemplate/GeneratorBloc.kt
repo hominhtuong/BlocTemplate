@@ -4,10 +4,11 @@ import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.PlatformDataKeys
 import com.intellij.openapi.application.WriteAction
-import com.intellij.openapi.ui.InputValidator
 import com.intellij.openapi.ui.Messages
+import com.mitu.bloctemplate.utils.*
+import com.mitu.bloctemplate.utils.Utils.Companion.capitalizeWords
 
-class GeneratorAction : AnAction() {
+class GeneratorBloc : AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
         val dialogResult = Messages.showInputDialogWithCheckBox(
             "Enter bloc name", "Generate Bloc", "Use folder",
@@ -17,13 +18,8 @@ class GeneratorAction : AnAction() {
         generatorFileName(dialogResult.first, dialogResult.second, e)
     }
 
-    private fun capitalizeWords(input: String): String {
-        return input.replace(Regex("\\b[a-z]")) { match ->
-            match.value.uppercase()
-        }
-    }
-
-    private fun generatorFileName(fileName: String, userFolder: Boolean, event: AnActionEvent) {
+    private fun generatorFileName(inputString: String, userFolder: Boolean, event: AnActionEvent) {
+        val fileName = inputString.formatFilename()
         val blocClassName = capitalizeWords(fileName)
         val newFileName = fileName.camelCaseToSnakeCase()
 
@@ -66,40 +62,5 @@ class GeneratorAction : AnAction() {
                 print("generate successfully!")
             }
         }
-    }
-
-    private fun customFileName(originalString: String): String {
-        val fileName = originalString
-            .trim()
-            .replace("\\s+".toRegex(), " ")
-            .replace(" ", "_")
-            .lowercase()
-        return fileName
-    }
-
-    fun String.convertUpperCases(): String {
-        val regex = "([A-Z])([A-Z]+)".toRegex()
-        return regex.replace(this) {
-            it.groups[1]!!.value + it.groups[2]!!.value.lowercase()
-        }
-    }
-
-    fun String.camelCaseToSnakeCase(): String {
-        val convertUpperCase = this.convertUpperCases()
-        return convertUpperCase
-            .replace("([A-Z][a-z]+)".toRegex(), "_$1")
-            .lowercase()
-            .removePrefix("_")
-    }
-
-}
-
-class FileNameInputValidator : InputValidator {
-    override fun checkInput(inputString: String): Boolean {
-        return inputString.isNotEmpty() && inputString.matches(Regex("^[a-zA-Z0-9]+$"))
-    }
-
-    override fun canClose(inputString: String): Boolean {
-        return checkInput(inputString)
     }
 }
