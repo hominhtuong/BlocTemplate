@@ -6,10 +6,10 @@
     <!-- Public plugin name should be written in Title Case.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
     <name>Bloc Template</name>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <change-notes>
         <![CDATA[
-        <h2>What's New in Version 1.1.0</h2>
+        <h2>What's New in Version 1.1.1</h2>
         <ul>
             <li>Thêm mục Generator cho Domain</li>
             <li>Tối ưu việc tạo file name, hỗ trợ cho các case đặt tên có ký tự `_`.</li>

@@ -8,13 +8,17 @@ class {{BlocName}}Bloc extends BaseBloc<{{BlocName}}State> {
   {{BlocName}}Bloc(
       ) : super(const {{BlocName}}State());
 
-  // AppBloc get appBloc => getIt<AppBloc>();
+  //final I{{BlocName}}Repository {{LowerBlocName}}Repository;
 
-  // final DataRepository dataRepository;
-  // final SharedPrefsHelper prefsHelper;
-
-  Future<void> update() async {
-    emit(state.copyWith(timestamp: DateTime.now().millisecondsSinceEpoch));
+  @override
+  void initState() {
+    super.initState();
+    // TODO: implement initState
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    // TODO: implement dispose
+  }
 }

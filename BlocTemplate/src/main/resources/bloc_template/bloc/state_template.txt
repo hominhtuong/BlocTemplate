@@ -3,6 +3,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part '{{FileNamePrefix}}_state.freezed.dart';
 
+// Custom state for {{BlocName}}
+//enum {{BlocName}}Status { initial, success, failure }
+
 @freezed
 class {{BlocName}}State extends BaseState with _${{BlocName}}State {
   const factory {{BlocName}}State({

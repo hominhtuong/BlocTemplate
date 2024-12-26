@@ -31,7 +31,7 @@ class GeneratorBloc : AnAction() {
         val blocInputStream = javaClass.classLoader.getResourceAsStream("bloc_template/bloc/bloc_template.txt")
         val blocContentReader = blocInputStream?.bufferedReader().use { it?.readText() }
         val blocContent = blocContentReader?.replace("{{BlocName}}", blocClassName)
-            ?.replace("{{FileNamePrefix}}", newFileName) ?: ""
+            ?.replace("{{FileNamePrefix}}", newFileName)?.replace("{{LowerBlocName}}", blocClassName.lowerFirstChar()) ?: ""
 
         val stateInputStream = javaClass.classLoader.getResourceAsStream("bloc_template/bloc/state_template.txt")
         val stateContentReader = stateInputStream?.bufferedReader().use { it?.readText() }

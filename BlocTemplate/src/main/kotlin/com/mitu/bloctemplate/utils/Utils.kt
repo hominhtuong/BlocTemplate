@@ -43,3 +43,8 @@ fun String.camelCaseToSnakeCase(): String {
         .removePrefix("_")
     return  abc;
 }
+
+fun String.lowerFirstChar(): String {
+    if (this.isEmpty()) return this
+    return this[0].lowercaseChar() + this.substring(1)
+}

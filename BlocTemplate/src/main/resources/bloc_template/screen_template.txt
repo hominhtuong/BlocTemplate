@@ -9,8 +9,6 @@ import 'bloc/{{FileNamePrefix}}_state.dart';
 class {{BlocName}}Screen extends BaseScreen<{{BlocName}}Bloc, {{BlocName}}State> {
   const {{BlocName}}Screen({super.key, required super.bloc});
 
-  // AppBloc get appBloc => getIt<AppBloc>();
-
   @override
   String get appBarTitle => LocaleKeys.template_title.tr();
 
